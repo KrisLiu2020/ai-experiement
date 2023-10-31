@@ -1,12 +1,8 @@
-// import { pipeline } from "@xenova/transformers";
-// const http = require('http');
-// // const { pipeline } = require('@xenova/transformers');
-// const pipe = await pipeline('sentiment-analysis');
+import http from 'http';
+import { pipeline } from "@xenova/transformers";
+const pipe = await pipeline('sentiment-analysis');
 
-const { pipeline } = require("@xenova/transformers");
-const http = require('http');
-
-// console.log(await pipe('hungry'));
+console.log(await pipe('hungry'));
 
 const server = http.createServer(async (req, res) => {
     if (req.method === 'POST' && req.url === '/') {
@@ -21,7 +17,7 @@ const server = http.createServer(async (req, res) => {
           const pipe = await pipeline('sentiment-analysis');
           const result = await pipe(text);
   
-          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.writeHead(200, { 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*"});
           res.end(JSON.stringify(result));
         } catch (error) {
           res.writeHead(500, { 'Content-Type': 'text/plain' });
