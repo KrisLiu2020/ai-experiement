@@ -6,10 +6,13 @@ console.log(await pipe('hungry'));
 
 const server = http.createServer(async (req, res) => {
     if (req.method === 'POST' && req.url === '/') {
+      console.log('POST request received.')
       let data = '';
       req.on('data', chunk => {
         data += chunk;
       });
+
+      console.log(`data: ${data}`);
   
       req.on('end', async () => {
         try {
