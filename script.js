@@ -9,8 +9,9 @@ const serverEndpoint = "http://localhost:8000"; // Replace with your actual serv
 
 // Add an event listener to the analyze button
 analyzeButton.addEventListener("click", () => {
+    console.log("clicked")
     const statement = inputText.value;
-
+    console.log("statement:", statement) 
     // Create a new XHR object
     const xhr = new XMLHttpRequest();
 
@@ -18,17 +19,21 @@ analyzeButton.addEventListener("click", () => {
     xhr.open("POST", serverEndpoint, true);
     xhr.setRequestHeader("Content-Type", "application/json");
 
+    xhr.onreadystatechange = function(){
+        console.log(xhr.status)
+    }
     // Define a callback function to handle the XHR response
     xhr.onload = function () {
         if (xhr.status === 200) {
             const response = JSON.parse(xhr.responseText);
-            labelElement.textContent = response.label;
-            scoreElement.textContent = response.score;
+            labelElement.textContent = response[0].label;
+            scoreElement.textContent = response[0].score;
         } else {
             console.error("Error analyzing sentiment: " + xhr.status);
         }
     };
 
+    console.log("hello")
     // Prepare the data to send to the server
     const data = JSON.stringify({ statement });
 
